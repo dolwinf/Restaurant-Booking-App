@@ -27,7 +27,7 @@ var reservations = [
     customerID: 700
   }
 ];
-
+//web routes
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -39,19 +39,18 @@ app.get("/view", function(req, res) {
 app.get("/add", function(req, res) {
   res.sendFile(path.join(__dirname, "add.html"));
 });
+//api routes
+app.post("/api/reserve", function(req,res){
+  var newBooking = req.body;
+  
+  reservations.push(newBooking);
 
-app.get("/api/tables/:tables", function(req, res) {
-  var allTables = req.params.tables;
+  res.json("Success");
+})
 
-  console.log(allTables);
+app.get("/api/tables", function(req, res) {
 
-  for (var i = 0; i < reservations.length; i++) {
-    if (chosen === reservations[i].customerName) {
-      return res.json(reservations[i]);
-    }
-  }
-
-  return res.json(false);
+  return res.json(reservations);
 });
 
 app.listen(PORT, function() {
