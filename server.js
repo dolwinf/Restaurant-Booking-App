@@ -27,6 +27,16 @@ var reservations = [
     customerID: 700
   }
 ];
+
+var waitingList = [
+  {
+    customerName: "waiitng1",
+    phoneNumber: "041234567",
+    customerEmail: "ben@hotmail.com",
+    customerID: 900
+  },
+];
+
 //web routes
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -42,15 +52,22 @@ app.get("/add", function(req, res) {
 //api routes
 app.post("/api/reserve", function(req,res){
   var newBooking = req.body;
-  
-  reservations.push(newBooking);
 
-  res.json("Success");
+  if(reservations.length < 5) {
+    reservations.push(newBooking);
+    res.json("Success into reservation");
+  } else {
+    waitingList.push(newBooking);
+    res.json("Success into waiting");
+  };
+
+
 })
 
 app.get("/api/tables", function(req, res) {
 
-  return res.json(reservations);
+  var response = {reservation: reservations, waitingList: waitingList}
+  return res.json(response);
 });
 
 app.listen(PORT, function() {

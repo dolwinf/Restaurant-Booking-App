@@ -67,8 +67,27 @@
 <script type="text/javascript">
 
 $.get("/api/tables", function(data){
-	data.forEach(function(item){
+	data.reservation.forEach(function(item){
 		$("#tableSection").append(`
+
+		<div class="card">
+		<div class="card-body">
+			Reserve Name: ${item.customerName} <br>
+			Phone Number: ${item.phoneNumber}
+			<br>
+			Customer Email: ${item.customerEmail}
+			<br>
+			Customer ID: ${item.customerID}
+			<br>
+			<br>
+		</div>
+		</div>
+		`
+		)
+
+	})
+	data.waitingList.forEach(function(item){
+		$("#waitlistSection").append(`
 
 		<div class="card">
 		<div class="card-body">
