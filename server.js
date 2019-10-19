@@ -41,6 +41,12 @@ var waitingList = [
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+app.post("/api/delete", function(req, res) {
+  reservations = [];
+  waitingList = [];
+  res.end();
+});
+
 
 app.get("/view", function(req, res) {
   res.sendFile(path.join(__dirname, "view.html"));
@@ -66,8 +72,12 @@ app.post("/api/reserve", function(req,res){
 
 app.get("/api/tables", function(req, res) {
 
-  var response = {reservation: reservations, waitingList: waitingList}
-  return res.json(response);
+  return res.json(reservations);
+});
+
+app.get("/api/waitlist", function(req, res) {
+
+  return res.json(waitingList);
 });
 
 app.listen(PORT, function() {
